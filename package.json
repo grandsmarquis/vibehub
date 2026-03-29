@@ -1,0 +1,16 @@
+{
+  "name": "vibehub",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "extensions/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "lint": "npm run lint -w web",
+    "db:migrate": "npm run db:migrate -w web",
+    "extension:compile": "npm run compile -w vibehub"
+  }
+}

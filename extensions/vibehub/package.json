@@ -1,0 +1,62 @@
+{
+  "name": "vibehub",
+  "displayName": "Vibehub",
+  "version": "0.1.0",
+  "publisher": "vibehub",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "files": [
+    "dist",
+    "scripts"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Vibehub",
+      "properties": {
+        "vibehub.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:3000",
+          "description": "Vibehub web app URL (no trailing slash)"
+        },
+        "vibehub.captureEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "When false, hooks skip uploading (config file updated for hook script)"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "vibehub.setToken",
+        "title": "Vibehub: Set extension token"
+      },
+      {
+        "command": "vibehub.openSettings",
+        "title": "Vibehub: Open web settings"
+      },
+      {
+        "command": "vibehub.showHookSnippet",
+        "title": "Vibehub: Show hooks.json snippet"
+      },
+      {
+        "command": "vibehub.syncConfig",
+        "title": "Vibehub: Sync config file for hooks"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node18",
+    "watch": "pnpm run compile -- --watch",
+    "vscode:prepublish": "pnpm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.25.2",
+    "typescript": "^5.8.3"
+  }
+}
