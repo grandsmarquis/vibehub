@@ -20,6 +20,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY apps/web ./apps/web
+# Workspace devDependencies (e.g. @tailwindcss/postcss) live under apps/web/node_modules
+COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 RUN --mount=type=cache,target=/app/apps/web/.next/cache \
