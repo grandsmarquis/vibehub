@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+.git
+.next
+**/.next
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+extensions/vibehub/dist
+.cursor
