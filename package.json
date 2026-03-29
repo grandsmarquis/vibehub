@@ -12,5 +12,8 @@
     "lint": "npm run lint -w web",
     "db:migrate": "npm run db:migrate -w web",
     "extension:compile": "npm run compile -w vibehub"
+  },
+  "devDependencies": {
+    "next": "15.5.14"
   }
 }
