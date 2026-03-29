@@ -21,7 +21,9 @@ COPY packages/db/package.json packages/db/
 COPY extensions/vibehub/package.json extensions/vibehub/
 
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
+# Workspace bins (e.g. `next`) are hoisted to the repo root; npm's workspace
+# script runs from apps/web without root .bin on PATH unless we add it.
+ENV PATH="/app/node_modules/.bin:${PATH}"
 
 # `next build` does not need a live DB for this app (routes are dynamic).
 ARG DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build
@@ -29,6 +31,7 @@ ENV DATABASE_URL=${DATABASE_URL}
 ARG AUTH_SECRET=build-time-placeholder-min-32-chars-long
 ENV AUTH_SECRET=${AUTH_SECRET}
 
+ENV NODE_ENV=production
 RUN npm run build -w web
 
 FROM base AS runner
