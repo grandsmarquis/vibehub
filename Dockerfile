@@ -9,7 +9,14 @@ COPY package.json package-lock.json ./
 COPY apps/web/package.json apps/web/package.json
 COPY packages/db/package.json packages/db/package.json
 COPY extensions/vibehub/package.json extensions/vibehub/package.json
-RUN npm ci
+# Lockfile was generated on macOS; npm ci may not lay down the Linux lightningcss native optional.
+# Install the matching lightningcss-* binding for this image (glibc vs musl, x64 vs arm64).
+RUN npm ci \
+  && (npm install -w web lightningcss-linux-x64-gnu@1.32.0 --no-save \
+      || npm install -w web lightningcss-linux-arm64-gnu@1.32.0 --no-save \
+      || npm install -w web lightningcss-linux-x64-musl@1.32.0 --no-save \
+      || npm install -w web lightningcss-linux-arm64-musl@1.32.0 --no-save) \
+  && cd apps/web && node -e "require('lightningcss')"
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
