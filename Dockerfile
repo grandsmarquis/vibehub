@@ -17,6 +17,9 @@ COPY package.json package-lock.json ./
 COPY apps/web apps/web
 COPY packages/db packages/db
 COPY extensions/vibehub extensions/vibehub
+# Lockfile nests deps under workspaces (e.g. next in apps/web/node_modules); root-only copy drops them.
+COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
+COPY --from=deps /app/extensions/vibehub/node_modules ./extensions/vibehub/node_modules
 RUN npm run build
 
 FROM base AS runner
