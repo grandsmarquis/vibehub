@@ -27,7 +27,7 @@
     "@types/react-dom": "^19.1.2",
     "daisyui": "^5.0.28",
     "eslint": "^9.25.1",
-    "eslint-config-next": "15.5.4",
+    "eslint-config-next": "15.5.9",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3"
   }
