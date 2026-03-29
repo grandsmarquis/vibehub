@@ -21,11 +21,13 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY apps/web ./apps/web
+# `next` is not hoisted to the repo root; without this, `npx next` downloads the latest Next.js.
+COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 COPY packages/db/package.json ./packages/db/
 COPY extensions/vibehub/package.json ./extensions/vibehub/
 
 ENV NODE_ENV=production
-ENV PATH="/app/node_modules/.bin:${PATH}"
+ENV PATH="/app/apps/web/node_modules/.bin:/app/node_modules/.bin:${PATH}"
 
 # Placeholders so `next build` can read env without a real database.
 ARG DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build
